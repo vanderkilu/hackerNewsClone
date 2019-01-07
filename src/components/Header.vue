@@ -1,11 +1,11 @@
 <template>
     <div>
         <nav class="navbar">
-            <router-link class="navbar__link" :to={}>Top</router-link>
-            <router-link class="navbar__link" :to={}>New</router-link>
-            <router-link class="navbar__link" :to={}>Show</router-link>
-            <router-link class="navbar__link" :to={}>Ask</router-link>
-            <router-link class="navbar__link" :to={}>Jobs</router-link>
+            <router-link class="navbar__link" :to="{name:'top'}">Top</router-link>
+            <router-link class="navbar__link" :to="{name:'new'}">New</router-link>
+            <router-link class="navbar__link" :to="{name:'show'}">Show</router-link>
+            <router-link class="navbar__link" :to="{name:'ask'}">Ask</router-link>
+            <router-link class="navbar__link" :to="{name:'job'}">Jobs</router-link>
         </nav>
         <div class="pagination">
             <span class="pagination__control">&lt;prev </span>

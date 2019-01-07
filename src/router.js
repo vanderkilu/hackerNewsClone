@@ -10,7 +10,27 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'top',
+      component: ItemContainer
+    },
+    {
+      path: '/new',
+      name: 'new',
+      component: ItemContainer
+    },
+    {
+      path: '/show',
+      name: 'show',
+      component: ItemContainer
+    },
+    {
+      path: '/ask',
+      name: 'ask',
+      component: ItemContainer
+    },
+    {
+      path: '/job',
+      name: 'job',
       component: ItemContainer
     }
   ]
