@@ -1,29 +1,35 @@
 <template>
+    <div>
+    <app-pagination></app-pagination>
     <div class="container">
         <transition-group name="flip-list">
-        <div class="item-list" v-for="item in items" :key="item.id">
+        <div class="item-list" v-for="item in slicedItems" :key="item.id">
             <h3 class="item-list__score">{{item.score}}</h3>
             <a :href="item.url" class="item-list__link">
                 <span class="item-list__title">{{item.title}}</span> ({{item.url | extractLinkTitle }})</a>
             <p class="faint">
                 by <router-link :to={} class="item-list__link">{{item.by}} </router-link>
                 {{ item.time | moment("from", "now", true) }} ago |
-                <router-link :to={} class="item-list__link">{{ item.kids ? item.kids.length : 0 }} comments</router-link>
+                <router-link :to="{name:'commentContainer', params: {id: item.id}}" class="item-list__link">{{ item.descendants }} comments</router-link>
             </p>
         </div>
         </transition-group>
-        <div class="loader" v-if="loading"></div>
+        <app-loader v-if="loading"></app-loader>
+    </div>
     </div>
 </template>
 
 <script>
-import { prefetch } from '../api/readApi.js'
-import { mapActions } from 'vuex';
+import { prefetch, getRecursiveComment, getAllComment } from '../api/readApi.js'
+import { mapActions,mapGetters } from 'vuex';
+import Loader from './Loader'
+import Pagination from './Pagination'
 export default {
     data() {
         return {
             items: [],
-            loading: true
+            loading: true,
+            type: this.$route.name
         }
     },
     filters: {
@@ -32,23 +38,43 @@ export default {
             return value.split('/')[2].replace('www.', '');
         }
     },
+    computed: {
+        ...mapGetters([
+            'controls'
+        ]),
+        slicedItems() {
+            return this.items.slice(this.controls.prev, this.controls.next)
+        }
+    },
     methods: {
         ...mapActions([
             'setIds',
             'generateItems',
-        ])
+            'setControlCount',
+            'setActiveType'
+        ]),
     },
-    mounted() {
-        prefetch(this.$route.name, (err, ids) => {
-            this.setIds(ids.slice(0,50));
+    created() {
+         this.setActiveType(this.$route.name)
+    },
+    beforeMount() {
+        this.stopWatching = prefetch(this.$route.name, (err, ids) => {
+            this.setIds(ids);
             console.log(ids);
             this.generateItems()
-            .then(()=> {
+            .then((data)=> {
                  this.loading = false;
-                 this.items = this.$store.getters.items
+                 this.items = data
             })
         })
     },
+    beforeDestroy() {
+        this.stopWatching()
+    },
+    components: {
+        appLoader: Loader,
+        appPagination: Pagination
+    }
 }
 </script>
 
@@ -94,7 +120,7 @@ export default {
     }
 
     .flip-list-move {
-        transform: all 1s;
+        transition: all 1s;
     }
     .flip-list-enter, .flip-list-leave-to {
         opacity: 0;
@@ -106,25 +132,6 @@ export default {
     .flip-list-leave-to {
         position: absolute;
     }
-    .loader {
-        border: 16px solid #f3f3f3; 
-        border-top: 16px solid #4a148c; 
-        border-radius: 50%;
-        width: 120px;
-        height: 120px;
-        animation: spin 2s linear infinite;
-        position: fixed;
-        top: 50vh;
-        left: 50vw;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-
-
     @media (max-width: 900px) {
         .container {
             width: 100%;

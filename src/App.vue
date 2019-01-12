@@ -24,7 +24,7 @@ body {
 }
 a:link, a:visited {
   text-decoration: none;
-  color: white;
+  color: gray;
 }
 </style>
 

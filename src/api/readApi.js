@@ -7,10 +7,15 @@ const api = initializeFirebase({
     }
 });
 
+
 export function prefetch(child, callback) {
-    api.child(`${child}stories`).on('value', (snapshot) => {
+    let ref = api.child(`${child}stories`)
+    ref.on('value', (snapshot)=> {
         callback(null, snapshot.val())
-    });
+    })
+    return ()=> {
+        ref.off()
+    }
 }
 
 export function processIds(child) {
@@ -25,3 +30,22 @@ export function processIds(child) {
 export function fetch(ids) {
     return Promise.all(ids.map((id)=> processIds(`item/${id}`)));
 }
+
+export function getItem(id) {
+    return new Promise((resolve, reject)=> {
+        api.child(`item/${id}`).on('value', (snapshot) => {
+            let comment = snapshot.val()
+            return resolve(comment)
+        })
+    })
+}
+
+export async function getMainComment(itemId) {
+    let item =  await getItem(itemId)
+    item.comments = []
+    if (item && item.kids) {
+        item.kids.map(async kid => item.comments.push(await getMainComment(kid)))     
+    }
+    return item
+}
+
