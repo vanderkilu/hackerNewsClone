@@ -8,7 +8,7 @@
             <a :href="item.url" class="item-list__link">
                 <span class="item-list__title">{{item.title}}</span> ({{item.url | extractLinkTitle }})</a>
             <p class="faint">
-                by <router-link :to={} class="item-list__link">{{item.by}} </router-link>
+                by <router-link :to="{name:'user', params: {slug: item.by}}" class="item-list__link">{{item.by}} </router-link>
                 {{ item.time | moment("from", "now", true) }} ago |
                 <router-link :to="{name:'commentContainer', params: {id: item.id}}" class="item-list__link">{{ item.descendants }} comments</router-link>
             </p>

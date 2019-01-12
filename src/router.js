@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import ItemContainer from './components/ItemContainer.vue'
 import CommentContainer from './components/CommentContainer.vue'
+import User from './components/User.vue'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/item/:id',
       name: 'commentContainer',
       component: CommentContainer
+    },
+    {
+      path: '/user/:slug',
+      name: 'user',
+      component: User
     }
   ]
 })

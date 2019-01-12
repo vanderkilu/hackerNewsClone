@@ -49,3 +49,12 @@ export async function getMainComment(itemId) {
     return item
 }
 
+export function getUser(slug) {
+    return new Promise((resolve, reject) => {
+        api.child(`user/${slug}`).on('value', (snapshot)=> {
+            return resolve(snapshot.val())
+        })
+    })
+    
+}
+
