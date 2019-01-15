@@ -8,13 +8,13 @@ It is often said to become an expert, you should continue to practice. This is o
 
 ## What i learnt building this project
 
-*Understanding asynchronous operations in javascript(promises and async/await)
-*How to work with firebase realtime database(subscribing and unsubscribing to events/changes)
-*Routing in vue.js (dynamic routing--different routes same components)
-*implementing recursive components in vue(was realy helpful in building the comment component)
-*working with vuex for state management
-*Transitions in vue.js (used to implement the flip animation)
-*responsive design
+* Understanding asynchronous operations in javascript(promises and async/await)
+* How to work with firebase realtime database(subscribing and unsubscribing to events/changes)
+* Routing in vue.js (dynamic routing--different routes same components)
+* implementing recursive components in vue(was realy helpful in building the comment component)
+* working with vuex for state management
+* Transitions in vue.js (used to implement the flip animation)
+* responsive design
 
 ## Project setup
 ```
