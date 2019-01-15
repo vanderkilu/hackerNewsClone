@@ -1,7 +1,7 @@
 <template>
     <div class="pagination">
         <span class="pagination__control" @click="moveBack()">&lt;prev </span>
-        <span class="pagination__text"> 1 / {{itemCount}} </span>
+        <span class="pagination__text"> {{count}} / {{itemCount}} </span>
         <span class="pagination__control" @click="moveFront()">more&gt;</span>
     </div>
 </template>
@@ -14,7 +14,8 @@ export default {
         return {
             prev: 0,
             next: 50,
-            pageCount: 1
+            pageCount: 1,
+            count: 1
         }
     },
     computed: {
@@ -22,7 +23,7 @@ export default {
             'list'
         ]),
         itemCount() {
-            return Math.floor(this.list.length / 50)
+            return Math.ceil(this.list.length / 50)
         },
     },
     methods: {
@@ -32,6 +33,7 @@ export default {
         ,
         moveFront() {
             if (this.next >= this.list.length) return
+            this.count++
             this.prev = this.next
             this.next += 50
             this.setControlCount({prev:this.prev ,next:this.next})
@@ -39,6 +41,7 @@ export default {
         },
         moveBack() {
             if (this.prev <= 0 ) return 
+            this.count--
             this.prev -= 50
             this.next -= 50
             this.setControlCount({prev:this.prev ,next:this.next})
@@ -52,6 +55,9 @@ export default {
         padding: 2rem;
         text-align: center;
         margin-top: 6rem;
+    }
+    .pagination__control {
+        cursor: pointer;
     }
     .pagination__control, .pagination__text {
         font-size: 1.7rem;

@@ -66,14 +66,4 @@ export default {
 .toggle-show  {
     cursor: pointer;
 }
-@media (max-width: 900px) {
-    /* .comment-descendant {
-        margin-left: 1rem;
-     }
-     .comment {
-       margin: 2.5rem 1rem;
-       position: relative;
-       z-index: 2;
-    }  */
-}
 </style>
