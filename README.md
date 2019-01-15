@@ -6,6 +6,8 @@ And cool flip animation whenever changes occurs
 
 It is often said to become an expert, you should continue to practice. This is one of my "practice project" 
 
+![preview](https://github.com/vanderkilu/hackerNewsClone/blob/master/src/assets/previewHn.png)
+
 ## What i learnt building this project
 
 * Understanding asynchronous operations in javascript(promises and async/await)
