@@ -1,6 +1,6 @@
 # hackerNewsClone
 
-This is a hackerNews Clone built with vue.js
+This is a hackerNews Clone built with vue.js and hackernews api
 It has support for realtime updates 
 And cool flip animation whenever changes occurs
 
