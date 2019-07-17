@@ -35,8 +35,6 @@ export default {
     computed: {
        ...mapGetters(['items', 'isLoading'])
     },
-    methods: {
-    },
     beforeMount() {
         const type = this.$route.name
         this.unwatchUpdates = fetchItemsIds(type, (err, ids)=> {
