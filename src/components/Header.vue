@@ -24,8 +24,10 @@
         z-index: 5;
     }
     .navbar__link {
-        margin-left: 1rem;
         font-size: 1.7rem;
         color: white !important;
+    }
+    .navbar__link:not(:first-child) {
+        margin-left: 1rem;
     }
 </style>
