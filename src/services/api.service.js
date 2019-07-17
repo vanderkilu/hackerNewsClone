@@ -28,13 +28,15 @@ export function fetchItem(itemId) {
 
 function fetchItemsIds(type) {
     const ref = api.child(`${type}stories`)
-    ref.on('value', (snapshot)=> {
-        resolve(snapshot.val())
-    }, reject)
+    return new Promise((resolve, reject)=> {
+        ref.on('value', (snapshot)=> {
+            resolve(snapshot.val())
+        }, reject)
+    })
 }
 
 export async function fetchItems(type) {
-    const ids = await fetchItemsIds(type)
+    const ids = await fetchItemsIds(type) 
     return Promise.all(ids.map(id => fetchItem(id)))
 }
 

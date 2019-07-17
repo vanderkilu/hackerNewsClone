@@ -1,6 +1,6 @@
 <template>
     <div class="comment-main">
-        <div class="comment-header">
+        <!-- <div class="comment-header">
             <h1 class="comment-text-bold"> 
                 <a :href="item.url">{{item.title}}</a>
             </h1>
@@ -10,13 +10,12 @@
         <div class="comment-container">
              <app-comment v-for="comment in item.comments" :key="comment.id" :comment="comment"></app-comment>
         </div>
-        <app-loader v-if="loading"></app-loader>
-    </div>
+        <app-loader v-if="loading"></app-loader>-->
+    </div> 
 </template>
 
 <script>
-import { getMainComment} from '../api/readApi'
-import { mapActions } from 'vuex'
+
 import Loader from './Loader.vue'
 import CommentChild from './CommentChild.vue'
 export default {
@@ -28,10 +27,7 @@ export default {
         }
     },
     beforeMount() {
-        getMainComment(this.$route.params.id)
-        .then((data)=> {
-            this.item = data
-            this.loading = false })
+       
     },
     components: {
         appLoader: Loader,

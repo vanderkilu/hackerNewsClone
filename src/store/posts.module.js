@@ -42,6 +42,9 @@ const mutations = {
     },
     [SET_ERROR](state, bool) {
         state.hasErrorOccured = bool
+    },
+    [SET_POSTS](state,items) {
+        state.items = items
     }
 }
 

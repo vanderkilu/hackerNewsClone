@@ -3,7 +3,7 @@
     <app-pagination></app-pagination>
     <div class="container">
         <transition-group name="flip-list">
-        <div class="item-list" v-for="item in slicedItems" :key="item.id">
+        <div class="item-list" v-for="item in items" :key="item.id">
             <h3 class="item-list__score">{{item.score}}</h3>
             <a :href="item.url" class="item-list__link">
                 <span class="item-list__title">{{item.title}}</span> ({{item.url | extractLinkTitle }})</a>
@@ -20,18 +20,11 @@
 </template>
 
 <script>
-import { prefetch, getRecursiveComment, getAllComment } from '../api/readApi.js'
-import { mapActions,mapGetters } from 'vuex';
+import {mapGetters} from 'vuex'
+import {FETCH_POSTS} from '../store/action.types'
 import Loader from './Loader'
 import Pagination from './Pagination'
 export default {
-    data() {
-        return {
-            items: [],
-            loading: true,
-            type: this.$route.name
-        }
-    },
     filters: {
         extractLinkTitle(value) {
             if (value)
@@ -39,37 +32,17 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'controls'
-        ]),
-        slicedItems() {
-            return this.items.slice(this.controls.prev, this.controls.next)
-        }
+       ...mapGetters(['items'])
     },
     methods: {
-        ...mapActions([
-            'setIds',
-            'generateItems',
-            'setControlCount',
-            'setActiveType'
-        ]),
     },
-    created() {
-         this.setActiveType(this.$route.name)
+    mounted() {
+        this.$store.dispatch(FETCH_POSTS, 'top')
     },
     beforeMount() {
-        this.stopWatching = prefetch(this.$route.name, (err, ids) => {
-            this.setIds(ids);
-            console.log(ids);
-            this.generateItems()
-            .then((data)=> {
-                 this.loading = false;
-                 this.items = data
-            })
-        })
+
     },
     beforeDestroy() {
-        this.stopWatching()
     },
     components: {
         appLoader: Loader,

@@ -24,7 +24,7 @@ const state = {
 }
 
 const actions = {
-    [FETCH_POST_AND_COMMENTS]({commit}, itemId) {
+    async [FETCH_POST_AND_COMMENTS]({commit}, itemId) {
         commit(FETCH_START)
         try {
             const item = await fetchComments(itemId)
@@ -46,6 +46,9 @@ const mutations = {
     },
     [SET_ERROR](state,bool) {
         state.hasErrorOccured = bool
+    },
+    [SET_POST](state, item) {
+        state.item = item
     }
 }
 const getters = {
