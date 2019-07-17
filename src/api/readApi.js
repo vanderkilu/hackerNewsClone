@@ -8,7 +8,7 @@ const api = initializeFirebase({
 });
 
 
-export function prefetch(child, callback) {
+export function watchForUpdates(child, callback) {
     let ref = api.child(`${child}stories`)
     ref.on('value', (snapshot)=> {
         callback(null, snapshot.val())
@@ -18,7 +18,7 @@ export function prefetch(child, callback) {
     }
 }
 
-export function processIds(child) {
+export function fetchPost(child) {
     return new Promise((res, reject) => {
         api.child(child).on('value', (snapshot)=> {
             const val = snapshot.val()
@@ -27,21 +27,13 @@ export function processIds(child) {
     })
 }
 
-export function fetch(ids) {
-    return Promise.all(ids.map((id)=> processIds(`item/${id}`)));
+export function fetchPosts(ids) {
+    return Promise.all(ids.map((id)=> fetchPost(`item/${id}`)));
 }
 
-export function getItem(id) {
-    return new Promise((resolve, reject)=> {
-        api.child(`item/${id}`).on('value', (snapshot) => {
-            let comment = snapshot.val()
-            return resolve(comment)
-        })
-    })
-}
 
-export async function getMainComment(itemId) {
-    let item =  await getItem(itemId)
+export async function fetchRecursiveComments(postId) {
+    let item =  await fetchPost(postId)
     item.comments = []
     if (item && item.kids) {
         item.kids.map(async kid => item.comments.push(await getMainComment(kid)))     
@@ -49,7 +41,7 @@ export async function getMainComment(itemId) {
     return item
 }
 
-export function getUser(slug) {
+export function fetchUser(slug) {
     return new Promise((resolve, reject) => {
         api.child(`user/${slug}`).on('value', (snapshot)=> {
             return resolve(snapshot.val())
