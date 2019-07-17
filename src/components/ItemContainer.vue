@@ -14,7 +14,7 @@
             </p>
         </div>
         </transition-group>
-        <app-loader v-if="loading"></app-loader>
+        <app-loader v-if="isLoading"></app-loader>
     </div>
     </div>
 </template>
@@ -32,7 +32,7 @@ export default {
         }
     },
     computed: {
-       ...mapGetters(['items'])
+       ...mapGetters(['items', 'isLoading'])
     },
     methods: {
     },

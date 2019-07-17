@@ -51,6 +51,9 @@ const mutations = {
 const getters = {
     items(state) {
         return state.items
+    },
+    isLoading(state) {
+        return state.isLoading
     }
 }
 
