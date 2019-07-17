@@ -1,3 +1,5 @@
 export const FETCH_POST_AND_COMMENTS="fetchPostAndComments"
 export const FETCH_POSTS="fetchPosts"
 export const FETCH_USER="fetchUser"
+export const RESET_PAGINATION="resetPagination"
+export const PAGINATE_BY="paginateBy"

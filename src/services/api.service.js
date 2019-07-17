@@ -8,7 +8,7 @@ const api = initializeFirebase({
 });
 
 
-export function watchForUpdates(type, callback) {
+export function fetchItemsIds(type, callback) {
     const ref = api.child(`${type}stories`)
     ref.on('value', (snapshot)=> {
         callback(null, snapshot.val())
@@ -26,17 +26,8 @@ export function fetchItem(itemId) {
     })
 }
 
-function fetchItemsIds(type) {
-    const ref = api.child(`${type}stories`)
-    return new Promise((resolve, reject)=> {
-        ref.on('value', (snapshot)=> {
-            resolve(snapshot.val())
-        }, reject)
-    })
-}
 
-export async function fetchItems(type) {
-    const ids = await fetchItemsIds(type) 
+export async function fetchItems(ids) {
     return Promise.all(ids.map(id => fetchItem(id)))
 }
 

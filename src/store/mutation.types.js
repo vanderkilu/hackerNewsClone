@@ -6,4 +6,6 @@ export const FETCH_START="setStart"
 export const FETCH_END="fetchEnd"
 export const SET_ERROR="setError"
 export const SET_ITEM_TYPE="setItemType"
+export const SET_PAGINATION="setPagination"
+export const SET_RESET_PAGINATION="setResetPagination"
 

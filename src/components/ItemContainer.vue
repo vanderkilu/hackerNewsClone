@@ -22,6 +22,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import {FETCH_POSTS} from '../store/action.types'
+import {fetchItemsIds} from '../services/api.service'
 import Loader from './Loader'
 import Pagination from './Pagination'
 export default {
@@ -36,13 +37,15 @@ export default {
     },
     methods: {
     },
-    mounted() {
-        this.$store.dispatch(FETCH_POSTS, 'top')
-    },
     beforeMount() {
-
+        const type = this.$route.name
+        this.unwatchUpdates = fetchItemsIds(type, (err, ids)=> {
+            if (err) return err
+            this.$store.dispatch(FETCH_POSTS, ids)
+        })
     },
     beforeDestroy() {
+        this.unwatchUpdates()
     },
     components: {
         appLoader: Loader,
