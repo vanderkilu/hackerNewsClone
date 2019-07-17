@@ -20,7 +20,7 @@ export function fetchItemsIds(type, callback) {
 
 export function fetchItem(itemId) {
     return new Promise((resolve, reject)=> {
-        api.child(`item/${itemId}`).on('value', (snapshot)=> {
+        api.child(`item/${itemId}`).once('value', (snapshot)=> {
             resolve(snapshot.val())
         }, reject)
     })
@@ -42,7 +42,7 @@ export async function fetchComments(itemId) {
 
 export function fetchUser(slug) {
     return new Promise((resolve, reject) => {
-        api.child(`user/${slug}`).on('value', (snapshot)=> {
+        api.child(`user/${slug}`).once('value', (snapshot)=> {
             return resolve(snapshot.val())
         }, reject)
     })

@@ -21,11 +21,16 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import {FETCH_POSTS} from '../store/action.types'
+import {FETCH_POSTS,  RESET_PAGINATION} from '../store/action.types'
 import {fetchItemsIds} from '../services/api.service'
 import Loader from './Loader'
 import Pagination from './Pagination'
 export default {
+    data() {
+        return {
+            isLoading: true
+        }
+    },
     filters: {
         extractLinkTitle(value) {
             if (value)
@@ -33,17 +38,17 @@ export default {
         }
     },
     computed: {
-       ...mapGetters(['items', 'isLoading'])
+       ...mapGetters(['items'])
     },
     beforeMount() {
         const type = this.$route.name
         this.unwatchUpdates = fetchItemsIds(type, (err, ids)=> {
-            if (err) return err
-            this.$store.dispatch(FETCH_POSTS, ids)
+            this.$store.dispatch(FETCH_POSTS, ids).then(()=> this.isLoading = false)
         })
     },
     beforeDestroy() {
         this.unwatchUpdates()
+        this.$store.dispatch(RESET_PAGINATION)
     },
     components: {
         appLoader: Loader,
@@ -95,16 +100,6 @@ export default {
 
     .flip-list-move {
         transition: all 1s;
-    }
-    .flip-list-enter, .flip-list-leave-to {
-        opacity: 0;
-        transform: translateY(1rem);
-    }
-    .flip-list-enter-active, .flip-list-leave-to {
-        transition: all 1s;
-    }
-    .flip-list-leave-to {
-        position: absolute;
     }
     @media (max-width: 900px) {
         .container {

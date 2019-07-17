@@ -4,8 +4,6 @@ import {
 } from './action.types'
 import {
     SET_ERROR,
-    FETCH_START,
-    FETCH_END,
     SET_POST
 } from './mutation.types'
 
@@ -25,25 +23,17 @@ const state = {
 
 const actions = {
     async [FETCH_POST_AND_COMMENTS]({commit}, itemId) {
-        commit(FETCH_START)
         try {
             const item = await fetchComments(itemId)
-            commit(SET_POST, item)
-            commit(FETCH_END)
+            return commit(SET_POST, item)
         }
         catch {
-            commit(SET_ERROR, true)
+            return commit(SET_ERROR, true)
         }
     }
 }
 
 const mutations = {
-    [FETCH_START](state) {
-        state.isLoading = true
-    },
-    [FETCH_END](state) {
-        state.isLoading = false
-    },
     [SET_ERROR](state,bool) {
         state.hasErrorOccured = bool
     },

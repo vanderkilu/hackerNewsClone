@@ -3,36 +3,28 @@ import { FETCH_POSTS, PAGINATE_BY,RESET_PAGINATION } from './action.types'
 import {
     SET_ERROR,
     SET_POSTS,
-    SET_ITEM_TYPE,
-    FETCH_START,
-    FETCH_END,
     SET_RESET_PAGINATION,
     SET_PAGINATION
 } from './mutation.types'
 
 const state = {
     items: [],
-    type: 'top',
-    isLoading: false,
     hasErrorOccured: false, 
     pagStart: 0,
     pagEnd: 50
 }
 
 const actions = {
-    async [FETCH_POSTS]({commit}, type) {
-        commit(FETCH_START)
-        commit(SET_ITEM_TYPE, type)
+    async [FETCH_POSTS]({commit}, ids) {
         try {
-            const items = await fetchItems(type)
-            commit(SET_POSTS, items)
-            commit(FETCH_END)
+            const items = await fetchItems(ids)
+            return commit(SET_POSTS, items)
         }
         catch(err) {
-            commit(SET_ERROR, true)
+            return commit(SET_ERROR, true)
         }
     },
-    [RESET_PAGINATION](commit){
+    [RESET_PAGINATION]({commit}){
         commit(SET_RESET_PAGINATION)
     },
     [PAGINATE_BY]({commit}, by) {
@@ -41,15 +33,7 @@ const actions = {
 }
 
 const mutations = {
-    [FETCH_START](state) {
-        state.isLoading = true
-    },
-    [FETCH_END](state) {
-        state.isLoading = false
-    },
-    [SET_ITEM_TYPE](state, type) {
-        state.type = type
-    },
+
     [SET_ERROR](state, bool) {
         state.hasErrorOccured = bool
     },
@@ -62,16 +46,13 @@ const mutations = {
     },
     [SET_RESET_PAGINATION](state) {
         state.pagStart = 0
-        state.pagEnd = 0
+        state.pagEnd = 50
     }
 }
 
 const getters = {
     items(state) {
         return state.items.slice(state.pagStart,state.pagEnd)
-    },
-    isLoading(state) {
-        return state.isLoading
     },
     pagInfo(state) {
         return {

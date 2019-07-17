@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <app-header></app-header>
-    <router-view :key="$route.name"/>
+    <transition name="fade">
+      <router-view :key="$route.name"/>
+    </transition>
+  
   </div>
 </template>
 
@@ -25,6 +28,12 @@ body {
 a:link, a:visited {
   text-decoration: none;
   color: gray;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
 
