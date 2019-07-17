@@ -1,8 +1,8 @@
 <template>
     <div class="pagination">
-        <span class="pagination__control" @click="next">&lt;prev </span>
+        <span class="pagination__control" @click="previous">&lt;prev </span>
         <span class="pagination__text"> </span>
-        <span class="pagination__control" @click="previous">more&gt;</span>
+        <span class="pagination__control" @click="next">more&gt;</span>
     </div>
 </template>
 
@@ -17,14 +17,15 @@ export default {
     methods: {
         next() {
             const {pagStart, pagEnd, len} = this.pagInfo
-            if ((pagEnd >= len)) return
+            if (pagEnd >= len) return
             const start = pagStart + 50
             const end = pagEnd + 50
             this.$store.dispatch(PAGINATE_BY, {pagStart:start, pagEnd:end})
+            
         },
         previous() {
             const {pagStart, pagEnd, len} = this.pagInfo
-            if ((pagStart <= 0)) return
+            if (pagStart <= 0) return
             const start = pagStart - 50
             const end = pagEnd - 50
             this.$store.dispatch(PAGINATE_BY, {pagStart:start, pagEnd:end})

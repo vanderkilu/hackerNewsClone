@@ -77,7 +77,7 @@ const getters = {
         return {
             len: state.items.length,
             pagStart:state.pagStart,
-            pageEnd: state.pageEnd
+            pagEnd: state.pagEnd
         }
     }
 }
