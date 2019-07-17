@@ -9,7 +9,7 @@ import {
     SET_POST
 } from './mutation.types'
 
-export const state = {
+const state = {
     item: {
         by: '',
         descendants: '',
@@ -23,7 +23,7 @@ export const state = {
     hasErrorOccured: false
 }
 
-export const actions = {
+const actions = {
     [FETCH_POST_AND_COMMENTS]({commit}, itemId) {
         commit(FETCH_START)
         try {
@@ -37,7 +37,7 @@ export const actions = {
     }
 }
 
-export const mutations = {
+const mutations = {
     [FETCH_START](state) {
         state.isLoading = true
     },
@@ -48,8 +48,15 @@ export const mutations = {
         state.hasErrorOccured = bool
     }
 }
-export const getters = {
+const getters = {
     item(state) {
         return state.item
     }
+}
+
+export default {
+    state,
+    actions,
+    mutations,
+    getters
 }

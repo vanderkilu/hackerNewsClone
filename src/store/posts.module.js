@@ -8,14 +8,14 @@ import {
     FETCH_END
 } from './mutation.types'
 
-export const state = {
+const state = {
     items: [],
     type: 'top',
     isLoading: false,
     hasErrorOccured: false, 
 }
 
-export const actions = {
+const actions = {
     async [FETCH_POSTS]({commit}, type) {
         commit(FETCH_START)
         commit(SET_ITEM_TYPE, type)
@@ -30,7 +30,7 @@ export const actions = {
     }
 }
 
-export const mutations = {
+const mutations = {
     [FETCH_START](state) {
         state.isLoading = true
     },
@@ -45,8 +45,15 @@ export const mutations = {
     }
 }
 
-export const getters = {
+const getters = {
     items(state) {
         return state.items
     }
+}
+
+export default {
+    state,
+    actions,
+    mutations,
+    getters
 }
