@@ -1,11 +1,4 @@
-FETCH_POST="fetchPost"
-FETCH_COMMENTS="fetchComments"
-FETCH_POSTS="fetchPosts"
-FETCH_USER="fetchUser"
-
-export {
-    FETCH_POST,
-    FETCH_POSTS,
-    FETCH_COMMENTS,
-    FETCH_USER
-}
+export const FETCH_POST="fetchPost"
+export const FETCH_COMMENTS="fetchComments"
+export const FETCH_POSTS="fetchPosts"
+export const FETCH_USER="fetchUser"
