@@ -1,7 +1,7 @@
 <template>
     <div class="pagination">
         <span class="pagination__control" @click="previous">&lt;prev </span>
-        <span class="pagination__text"> </span>
+        <span class="pagination__text"> {{count}} / {{totalPageNum}}</span>
         <span class="pagination__control" @click="next">more&gt;</span>
     </div>
 </template>
@@ -11,23 +11,34 @@
 import {mapGetters} from 'vuex'
 import {PAGINATE_BY} from '../store/action.types'
 export default {
+    data() {
+        return {
+            itemsPerPage: 50,
+            count: 1
+        }
+    },
     computed: {
-        ...mapGetters(['pagInfo'])
+        ...mapGetters(['pagInfo']),
+        totalPageNum() {
+            return Math.ceil(this.pagInfo.len / this.itemsPerPage)
+        }
     },
     methods: {
         next() {
             const {pagStart, pagEnd, len} = this.pagInfo
             if (pagEnd >= len) return
-            const start = pagStart + 50
-            const end = pagEnd + 50
+            const start = pagStart +50
+            const end = pagEnd +50
+            this.count++
             this.$store.dispatch(PAGINATE_BY, {pagStart:start, pagEnd:end})
             
         },
         previous() {
             const {pagStart, pagEnd, len} = this.pagInfo
             if (pagStart <= 0) return
-            const start = pagStart - 50
-            const end = pagEnd - 50
+            const start = pagStart -50
+            const end = pagEnd -50
+            this.count--
             this.$store.dispatch(PAGINATE_BY, {pagStart:start, pagEnd:end})
         }
     }

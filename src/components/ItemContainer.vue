@@ -41,6 +41,11 @@ export default {
     computed: {
        ...mapGetters(['items'])
     },
+    watch: {
+        items(newVal) {
+            this.activeItems = newVal
+        }
+    },
     beforeMount() {
         const type = this.$route.name
         this.unwatchUpdates = fetchItemsIds(type, (err, ids)=> {

@@ -38,7 +38,8 @@ const mutations = {
         state.hasErrorOccured = bool
     },
     [SET_POSTS](state,items) {
-        state.items = items
+        const nonNullItems = items.filter(i => i !== null)
+        state.items = nonNullItems
     },
     [SET_PAGINATION](state,by) {
         state.pagStart = by.pagStart
