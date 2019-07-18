@@ -45,5 +45,8 @@ export default new Router({
       name: 'user',
       component: User
     }
-  ]
+  ],
+  scrollBehavior(to, from, pos) {
+    return { x: 0, y: 0 }
+  }
 })
