@@ -22,8 +22,6 @@ export default {
         return {
             show:true
         }
-    },
-    methods: {
     }
 }
 </script>
