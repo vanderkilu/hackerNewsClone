@@ -3,7 +3,7 @@
     <app-pagination></app-pagination>
     <div class="container">
         <transition-group name="flip-list">
-        <div class="item-list" v-for="item in items" :key="item.id">
+        <div class="item-list" v-for="item in activeItems" :key="item.id">
             <h3 class="item-list__score">{{item.score}}</h3>
             <a :href="item.url" class="item-list__link">
                 <span class="item-list__title">{{item.title}}</span> ({{item.url | extractLinkTitle }})</a>
@@ -28,7 +28,8 @@ import Pagination from './Pagination'
 export default {
     data() {
         return {
-            isLoading: true
+            isLoading: true,
+            activeItems: []
         }
     },
     filters: {
@@ -43,7 +44,10 @@ export default {
     beforeMount() {
         const type = this.$route.name
         this.unwatchUpdates = fetchItemsIds(type, (err, ids)=> {
-            this.$store.dispatch(FETCH_POSTS, ids).then(()=> this.isLoading = false)
+            this.$store.dispatch(FETCH_POSTS, ids).then(()=> {
+                this.isLoading = false
+                this.activeItems = this.items
+            })
         })
     },
     beforeDestroy() {
@@ -97,9 +101,18 @@ export default {
     .faint {
         color: gray;
     }
-
     .flip-list-move {
         transition: all 1s;
+    }
+    .flip-list-enter, .flip-list-leave-to {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+    .flip-list-enter-active, .flip-list-leave-to {
+        transition: all 1s;
+    }
+    .flip-list-leave-to {
+        position: absolute;
     }
     @media (max-width: 900px) {
         .container {

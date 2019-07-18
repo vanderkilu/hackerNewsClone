@@ -1,6 +1,6 @@
 <template>
     <div class="comment-main">
-        <!-- <div class="comment-header">
+        <div class="comment-header">
             <h1 class="comment-text-bold"> 
                 <a :href="item.url">{{item.title}}</a>
             </h1>
@@ -10,24 +10,23 @@
         <div class="comment-container">
              <app-comment v-for="comment in item.comments" :key="comment.id" :comment="comment"></app-comment>
         </div>
-        <app-loader v-if="loading"></app-loader>-->
+        <app-loader v-if="loading"></app-loader>
     </div> 
 </template>
-
 <script>
 
 import Loader from './Loader.vue'
 import CommentChild from './CommentChild.vue'
+import {FETCH_POST_AND_COMMENTS} from '../store/action.types'
+import store from '../store'
+import {mapGetters} from 'vuex'
 export default {
-    data() {
-        return {
-            comments: [],
-            loading: true,
-            item: {kids:''}
-        }
+    computed: {
+        ...mapGetters(['item'])
     },
-    beforeMount() {
-       
+    beforeRouteEnter (to, from, next) {
+        store.dispatch(FETCH_POST_AND_COMMENTS, to.params.id)
+             .then(()=> next())
     },
     components: {
         appLoader: Loader,
