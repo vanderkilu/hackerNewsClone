@@ -17,7 +17,6 @@ const state = {
         url: '',
         comments: []
     },    
-    isLoading: false,
     hasErrorOccured: false
 }
 
