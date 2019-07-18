@@ -9,9 +9,17 @@
 
 <script>
 import {mapGetters} from 'vuex'
-
+import {fetchUser} from '../services/api.service'
+import {FETCH_USER} from '../store/action.types'
+import store from '../store'
 export default {
-
+    computed: {
+        ...mapGetters(['user'])
+    },
+    beforeRouteEnter (to, from, next) {
+        store.dispatch(FETCH_USER, to.params.slug)
+             .then(()=> next())   
+    }
 }
 </script>
 
